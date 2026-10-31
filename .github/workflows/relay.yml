@@ -1,0 +1,39 @@
+name: relay-page-update
+# GitHub Actions のスケジュール実行（cron は UTC指定）
+# UTC 02:01 / 07:01 / 11:01 = JST 11:01 / 16:01 / 20:01
+# 公開リポジトリなら GitHub Actions の利用は無料（docs/pricing）
+on:
+  schedule:
+    - cron: "1 2 * * *"
+    - cron: "1 7 * * *"
+    - cron: "1 11 * * *"
+  workflow_dispatch: {}   # 手動実行も可能（Actionsタブの Run workflow）
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 記事ページを自動生成（1日3回 × 3件）
+        run: python relay_page.py --batch 3
+        env:
+          DMM_API_ID: ${{ secrets.DMM_API_ID }}
+          DMM_AFFILIATE_ID: ${{ secrets.DMM_AFFILIATE_ID }}
+          RELAY_SITE_URL: ${{ vars.RELAY_SITE_URL }}
+          RELAY_OUTPUT_DIR: docs
+
+      - name: 生成物をコミット＆push
+        run: |
+          git config user.name "relay-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs published_ids.txt
+          git commit -m "auto: relay pages $(date -u +%F)" || echo "no changes"
+          git push
