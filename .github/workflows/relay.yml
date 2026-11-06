@@ -27,6 +27,7 @@ jobs:
         env:
           DMM_API_ID: ${{ secrets.DMM_API_ID }}
           DMM_AFFILIATE_ID: ${{ secrets.DMM_AFFILIATE_ID }}
+          PR_POST_URL: ${{ vars.PR_POST_URL }}
           RELAY_SITE_URL: ${{ vars.RELAY_SITE_URL }}
           RELAY_OUTPUT_DIR: docs
 
