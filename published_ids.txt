@@ -94,3 +94,6 @@ urvrsp00636
 h_1711astr00031
 ssis00685
 sivr00520
+jur00920
+jufe00626
+waaa00585
