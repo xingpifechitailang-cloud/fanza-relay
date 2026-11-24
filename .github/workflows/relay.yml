@@ -30,6 +30,8 @@ jobs:
           PR_POST_URL: ${{ vars.PR_POST_URL }}
           RELAY_SITE_URL: ${{ vars.RELAY_SITE_URL }}
           RELAY_OUTPUT_DIR: docs
+          NICHE_KEYWORDS: ${{ vars.NICHE_KEYWORDS }}
+
 
       - name: 生成物をコミット＆push
         run: |
