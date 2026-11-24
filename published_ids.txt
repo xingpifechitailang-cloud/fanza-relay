@@ -247,3 +247,6 @@ dasd00889
 mvsd00570
 1start00315
 midv00254
+jufe00399
+miaa00979
+snos00477
